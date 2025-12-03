@@ -1,6 +1,6 @@
 # solving the comma.ai ctf
 
-**spoiler warning**: this writeup contains complete solutions to all five flags from the comma.ai neurips ctf. if you want to solve it yourself first, stop reading.
+**spoiler warning**: this contains complete [solutions](https://github.com/utkarshgill/comma-ctf) to all five flags from the comma.ai neurips ctf. if you want to solve it yourself first, stop reading.
 
 ---
 
