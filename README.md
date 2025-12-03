@@ -33,7 +33,7 @@ instruction saying to go somewhere 'for the next flag'. Good luck!
 
 **flag 1:** `429e680b`
 
-## flag 2 - zero-width unicode steganography
+## flag 2 - zero-width unicode stego
 
 the model_reports directory had many subdirectories. what what what... a uuid starting with the flag we just found... well WHAT ARE THE ODDS?!
 
