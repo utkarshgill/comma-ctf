@@ -41,8 +41,18 @@ these characters were:
 - U+200B (zero width space)
 - U+200C (zero width non-joiner)
 - U+200D (zero width joiner)
+- U+200E (left-to-right mark)
+- U+200F (right-to-left mark)
 
-each character type mapped to a bit. i wrote a decoder:
+each character type maps to a bit. figuring out which character maps to 0 or 1 was trial and error:
+
+1. extract all zero-width characters from the file
+2. try a mapping (e.g., U+200B=0, U+200C=1, ...)
+3. group resulting bits into 8-bit chunks
+4. decode as ascii
+5. if output is readable text, the mapping is correct. if garbage, try another mapping.
+
+the mapping that worked: **U+200C and U+200E = 1, everything else = 0**. i wrote a decoder:
 
 ```python
 import sys
