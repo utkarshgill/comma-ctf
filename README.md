@@ -1,5 +1,9 @@
 # solving the comma.ai ctf
 
+**spoiler warning**: this writeup contains complete solutions to all five flags from the comma.ai neurips ctf. if you want to solve it yourself first, stop reading.
+
+---
+
 comma.ai released a ctf for their neurips event. this was my first ctf. it took two days.
 
 ## starting point
