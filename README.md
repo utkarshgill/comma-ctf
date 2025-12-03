@@ -4,7 +4,9 @@ comma.ai released a ctf for their neurips event. this was my first ctf. it took 
 
 ## starting point
 
-the challenge was at https://comma.ai/neurips. there was an image file called `comma_four.jpg`. i needed to find flags hidden in various places.
+the challenge was at https://comma.ai/neurips. there was an image file called `comma_four.jpg`.
+
+![comma_four](https://github.com/user-attachments/assets/1e2d0e3a-2a5b-46e4-9c66-6349f25ee745)
 
 ## flag 1 - exif metadata
 
@@ -29,7 +31,11 @@ instruction saying to go somewhere 'for the next flag'. Good luck!
 
 ## flag 2 - zero-width unicode steganography
 
-the model_reports directory had many subdirectories. one of them contained a readme.txt file that looked normal but had invisible unicode characters embedded in it.
+the model_reports directory had many subdirectories. what what what... a uuid starting with the flag we just found... well WHAT ARE THE ODDS?!
+
+there was a readme file that looked normal but had invisible unicode characters embedded in it.
+
+<img width="1728" height="1117" alt="Screenshot 2025-12-04 at 12 31 14 AM" src="https://github.com/user-attachments/assets/b2611b13-e95c-45c5-aea6-11bb004b3f77" />
 
 these characters were:
 - U+200B (zero width space)
