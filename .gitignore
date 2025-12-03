@@ -1,0 +1,14 @@
+# cloned at runtime by onnx_extract.sh
+openpilot/
+
+# virtual environment
+.venv/
+venv/
+
+# python
+__pycache__/
+*.pyc
+
+# temp files
+*.tmp
+
