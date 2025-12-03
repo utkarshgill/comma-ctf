@@ -2,13 +2,22 @@
 set -euo pipefail
 
 REPO_DIR="openpilot"
+BRANCH="neurips-driving"
 
-if [ ! -d "$REPO_DIR/.git" ]; then
-  git clone --depth=1 --no-single-branch https://github.com/commaai/openpilot.git "$REPO_DIR"
+# if repo is broken or incomplete, remove and reclone
+if [ -d "$REPO_DIR" ] && [ ! -f "$REPO_DIR/selfdrive/modeld/models/driving_policy.onnx" ]; then
+  echo "removing incomplete openpilot clone..."
+  rm -rf "$REPO_DIR"
 fi
 
-git -C "$REPO_DIR" fetch --depth=1 origin neurips-driving >/dev/null 2>&1 || true
-git -C "$REPO_DIR" checkout -f FETCH_HEAD >/dev/null 2>&1 || true
+if [ ! -d "$REPO_DIR/.git" ]; then
+  echo "cloning openpilot (branch: $BRANCH)..."
+  git clone --depth=1 --branch="$BRANCH" https://github.com/commaai/openpilot.git "$REPO_DIR"
+else
+  echo "using existing openpilot clone"
+  git -C "$REPO_DIR" fetch --depth=1 origin "$BRANCH" 2>&1 | grep -v "^remote:" || true
+  git -C "$REPO_DIR" checkout -f FETCH_HEAD 2>&1 | head -n1 || true
+fi
 
 # extract and print the full clue text from ONNX
 python3 - <<'PY'
