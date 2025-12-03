@@ -245,6 +245,16 @@ congratulations for finding the last flag{36d0c194}
 | 4 | `1205a94e` | aes-ecb brute force |
 | 5 | `36d0c194` | jsteg dct stego |
 
+## files in this repo
+
+- `exif.sh` - extracts exif metadata
+- `decode_zero.py` - decodes zero-width unicode
+- `onnx_extract.sh` - clones openpilot and extracts from onnx
+- `brute_force.py` - brute forces aes key
+- `last_flag.py` - extracts jsteg payload
+- `run.sh` - orchestrator that runs all steps
+- `comma_four.jpg` - original challenge image
+
 ## tools
 
 - exiftool - metadata extraction
@@ -252,6 +262,28 @@ congratulations for finding the last flag{36d0c194}
 - pycryptodome - aes decryption
 - strings, grep, git - basic unix tools
 - python - scripting
+
+## what worked
+
+- start with cheap tests (metadata, strings)
+- follow the clues in order
+- validate each step before moving on
+- when extraction fails, it's usually a tiny detail (endianness, coefficient filter, byte order)
+- simple and reproducible scripts, parameter sweeps when stuck
+
+## what made this hard
+
+flag 5 was the main difficulty. jsteg extraction fails catastrophically with small mistakes:
+- including zeros when you should skip them
+- including `±1` coefficients when you should skip them  
+- wrong zigzag order
+- wrong byte bit order
+- wrong endianness for length field
+- including dc coefficient
+
+each wrong choice makes the length field decode to garbage (e.g., 2 million bytes instead of 51), and the entire extraction fails.
+
+the solution required understanding the exact jsteg convention and implementing it precisely.
 
 ## what i learned
 
@@ -276,23 +308,6 @@ this was my first ctf and i learned a lot:
 - zigzag scan order
 - why steganography uses quantized coefficients (changing lsb barely affects image)
 
-**debugging approach**:
-- start with cheap tests (metadata, strings)
-- follow the clues in order
-- validate each step before moving on
-- when extraction fails, it's usually a tiny detail (endianness, coefficient filter, byte order)
-- keep scripts simple and reproducible
-
-## files in this repo
-
-- `exif.sh` - extracts exif metadata
-- `decode_zero.py` - decodes zero-width unicode
-- `onnx_extract.sh` - clones openpilot and extracts from onnx
-- `brute_force.py` - brute forces aes key
-- `last_flag.py` - extracts jsteg payload
-- `run.sh` - orchestrator that runs all steps
-- `comma_four.jpg` - original challenge image
-
 ## notes
 
 the difficulty curve was good. flag 1 was easy enough that i could get started. flags 2 and 3 introduced new concepts but were still approachable. flag 4 required understanding crypto basics. flag 5 was genuinely hard - i tried many wrong approaches before getting the coefficient selection rules exactly right.
@@ -303,29 +318,4 @@ hiding two separate flags in the same image (exif + dct) was cool. made me come 
 
 overall, this was a great learning experience. i now understand steganography, basic cryptanalysis, and jpeg internals much better than before. would recommend to anyone wanting to learn these topics.
 
-## what worked
-
-starting with cheap tests (metadata, strings) before expensive ones.
-
-following clues sequentially rather than random exploration.
-
-validating each extraction (printable score, expected format, reasonable length).
-
-keeping scripts minimal and reproducible.
-
-systematic parameter sweeps when stuck (for jsteg: tried variants of coefficient selection, byte order, endianness).
-
-## what made this hard
-
-flag 5 was the main difficulty. jsteg extraction fails catastrophically with small mistakes:
-- including zeros when you should skip them
-- including `±1` coefficients when you should skip them  
-- wrong zigzag order
-- wrong byte bit order
-- wrong endianness for length field
-- including dc coefficient
-
-each wrong choice makes the length field decode to garbage (e.g., 2 million bytes instead of 51), and the entire extraction fails.
-
-the solution required understanding the exact jsteg convention and implementing it precisely.
 
