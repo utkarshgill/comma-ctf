@@ -51,10 +51,16 @@ run_and_extract(){
 
   if [ -n "$matches" ]; then
     printf "%s\n" "$matches" | while IFS= read -r f; do
-      # Find the line containing the flag and extract readable clue text
-      clue_line=$(grep -a -m1 -F "$f" "$log_file" | tr -cd '[:print:]\t' | sed 's/^[[:space:]]*//' || true)
-      if [ -n "$clue_line" ]; then
-        echo "Clue: $clue_line"
+      # For ONNX (multi-line clue), show the full output (already filtered by onnx_extract.sh)
+      if [[ "$label" == *"ONNX"* ]]; then
+        echo "Clue:"
+        cat "$log_file" | tr -cd '[:print:]\t\n' | sed 's/^[[:space:]]*//'
+      else
+        # For others, show the line containing the flag
+        clue_line=$(grep -a -m1 -F "$f" "$log_file" | tr -cd '[:print:]\t' | sed 's/^[[:space:]]*//' || true)
+        if [ -n "$clue_line" ]; then
+          echo "Clue: $clue_line"
+        fi
       fi
       echo "Flag: $f"
       if ! grep -qF "$f" "$OUT"; then
