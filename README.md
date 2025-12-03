@@ -322,8 +322,3 @@ each wrong choice makes the length field decode to garbage (e.g., 2 million byte
 
 the solution required understanding the exact jsteg convention and implementing it precisely.
 
-## acknowledgments
-
-i used chatgpt as a thinking partner throughout this process. it helped me understand concepts i was unfamiliar with (jpeg internals, jsteg conventions, zero-width unicode stego), suggested approaches when i was stuck, and helped debug my scripts. i wrote and ran all code locally and verified every result myself.
-
-being honest about using help is important. in real work you use whatever resources are available - documentation, stack overflow, colleagues, ai tools. what matters is that you understand what you're doing and can reproduce and explain your work.
