@@ -35,7 +35,7 @@ the model_reports directory had many subdirectories. what what what... a uuid st
 
 there was a readme file that looked normal but had invisible unicode characters embedded in it.
 
-<img width="1728" height="1117" alt="Screenshot 2025-12-04 at 12 31 14 AM" src="https://github.com/user-attachments/assets/b2611b13-e95c-45c5-aea6-11bb004b3f77" />
+![model reports](https://github.com/user-attachments/assets/b2611b13-e95c-45c5-aea6-11bb004b3f77)
 
 these characters were:
 - U+200B (zero width space)
