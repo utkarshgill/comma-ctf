@@ -176,7 +176,7 @@ jpeg compression:
 
 jsteg embeds bits in these quantized coefficients. extraction rules:
 - skip dc coefficient (index 0)
-- skip coefficients where |value| ≤ 1
+- skip coefficients where `|value| ≤ 1`
 - traverse blocks row-major (left to right, top to bottom)
 - within each block use zigzag scan order
 - extract lsb of each remaining coefficient
@@ -276,13 +276,6 @@ this was my first ctf and i learned a lot:
 - zigzag scan order
 - why steganography uses quantized coefficients (changing lsb barely affects image)
 
-**jsteg specifically**:
-- skip dc coefficient (too visible if modified)
-- skip small coefficients (|v| ≤ 1 are unstable)
-- use strict zigzag order
-- extract bits in exact jpeg encoding order
-- payload framing with length header
-
 **debugging approach**:
 - start with cheap tests (metadata, strings)
 - follow the clues in order
@@ -326,7 +319,7 @@ systematic parameter sweeps when stuck (for jsteg: tried variants of coefficient
 
 flag 5 was the main difficulty. jsteg extraction fails catastrophically with small mistakes:
 - including zeros when you should skip them
-- including ±1 coefficients when you should skip them  
+- including `±1` coefficients when you should skip them  
 - wrong zigzag order
 - wrong byte bit order
 - wrong endianness for length field
