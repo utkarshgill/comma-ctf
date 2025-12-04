@@ -37,40 +37,57 @@ instruction saying to go somewhere 'for the next flag'. Good luck!
 
 the model_reports directory had many subdirectories. what what what... a uuid starting with the flag we just found... well WHAT ARE THE ODDS?!
 
-there was a readme file that looked normal but had invisible unicode characters embedded in it.
+there was a readme file at `429e680b-077d-461f-9df9-dd28aa0b6b26/400/README.txt`. it contained plain text about model evaluation reports. nothing obviously suspicious:
+
+```
+comma.ai uses this repository to share all reports used to evaluate the models shipped to openpilot.
+Examples:
+- North Nevada driving model 0.10.1: e2d9c622-25a8-4ccd-8c8e-c62537b7aa0c/400/
+- World Model used in 0.10.1: 923eee54-b95d-465c-a9d7-8c1064170270/90/
+- Auto Encoder used in 0.10.1: 4672da0d-19f5-44f8-a5fb-2215981c9c0e/50/
+- Driver Monitoring Model used in 0.10.1: 59cfd731-6f80-4857-9271-10d952165079/200/
+these reports run during training and constitute our entire automated test and evaluation suite. Check them out!​‌‌​​​‌‌​‌‌​‌‌‌‌​‌‌​‌‌‌​​‌‌​​‌‌‌​‌‌‌​​‌​​‌‌​​​​‌​‌‌‌​‌​​​‌‌‌​‌​‌​‌‌​‌‌​​​‌‌​​​​‌​‌‌‌​‌​​​‌‌​‌​​‌​‌‌​‌‌‌‌​‌‌​‌‌‌​​‌‌‌​​‌‌​​‌​​​​​​‌‌​​‌‌​​‌‌​‌‌‌‌​‌‌‌​​‌​​​‌​​​​​​‌‌​​‌‌​​‌‌​‌​​‌​‌‌​‌‌‌​​‌‌​​‌​​​‌‌​‌​​‌​‌‌​‌‌‌​​‌‌​​‌‌‌​​‌​​​​​​‌‌‌​‌​​​‌‌​‌​​​​‌‌​​‌​‌​​‌​​​​​​‌‌‌​​‌‌​‌‌​​‌​‌​‌‌​​​‌‌​‌‌​‌‌‌‌​‌‌​‌‌‌​​‌‌​​‌​​​​‌​​​​​​‌‌​​‌‌​​‌‌​‌‌​​​‌‌​​​​‌​‌‌​​‌‌‌​‌‌‌‌​‌‌​​‌‌‌​​‌​​‌‌​​​​​​‌‌‌​​‌​​‌‌​‌‌​​​‌‌​​‌‌​​‌‌​‌‌​​‌‌​​‌​‌​​‌‌​​‌​​‌‌‌‌‌​‌​​‌​‌‌‌​​​‌​​​​​​‌‌​​‌‌​​‌‌​‌​​‌​‌‌​‌‌‌​​‌‌​​‌​​​​‌​​​​​​‌‌‌​‌​​​‌‌​‌​​​​‌‌​​‌​‌​​‌​​​​​​‌‌​‌‌‌​​‌‌​​‌​‌​‌‌‌‌​​​​‌‌‌​‌​​​​‌​​​​​​‌‌​​‌‌​​‌‌​‌‌​​​‌‌​​​​‌​‌‌​​‌‌‌​​‌​​​​​​‌‌​‌​​‌​‌‌​‌‌‌​​​‌​​​​​​‌‌‌​‌​​​‌‌​‌​​​​‌‌​​‌​‌​​‌​​​​​​‌‌​‌‌‌‌​‌‌‌​​​​​‌‌​​‌​‌​‌‌​‌‌‌​​‌‌‌​​​​​‌‌​‌​​‌​‌‌​‌‌​​​‌‌​‌‌‌‌​‌‌‌​‌​​​​‌​​​​​​‌‌‌​​‌​​‌‌​​‌​‌​‌‌‌​​​​​‌‌​‌‌‌‌​‌‌‌​​‌‌​‌‌​‌​​‌​‌‌‌​‌​​​‌‌​‌‌‌‌​‌‌‌​​‌​​‌‌‌‌​​‌​​‌​‌‌​​​​‌​​​​​​‌‌​​‌​​​‌‌​‌‌‌‌​‌‌​‌‌‌​​​‌​​‌‌‌​‌‌‌​‌​​​​‌​​​​​​‌‌​​‌‌​​‌‌​‌‌‌‌​‌‌‌​​‌​​‌‌​​‌‌‌​‌‌​​‌​‌​‌‌‌​‌​​​​‌​​​​​​‌‌‌​‌​​​‌‌​‌​​​​‌‌​​‌​‌​​‌​​​​​​‌‌​​​‌​​‌‌‌​​‌​​‌‌​​​​‌​‌‌​‌‌‌​​‌‌​​​‌‌​‌‌​‌​​​​‌‌​​‌​‌​‌‌‌​​‌‌​​‌​​​​‌
+```
+
+the file was 3,619 bytes even though the visible paragraph was roughly 400 characters. that mismatch suggested hidden data.
+
+```bash
+curl -sL https://commaai.github.io/model_reports/429e680b.../README.txt | wc -c
+# 3619
+
+curl -sL https://commaai.github.io/model_reports/429e680b.../README.txt | cat -v
+# ...Check them out!​M-^@M-^K​M-^@M-^L​M-^@M-^L​M-^@M-^K...
+```
+
+`cat -v` showed escape sequences after the visible text: `M-^@M-^K` and `M-^@M-^L` repeated hundreds of times. didn't know what those were.
+
+googled "invisible unicode steganography" and found that zero-width characters (U+200B, U+200C, etc.) are commonly used to hide binary data in text. checked if those were present:
+
+```bash
+python3 -c "
+text = open('README.txt').read()
+for c in set(text):
+    if 0x200b <= ord(c) <= 0x200f:
+        print(f'U+{ord(c):04X}: {text.count(c)} occurrences')
+"
+# U+200B: 545 occurrences
+# U+200C: 487 occurrences
+```
 
 ![model reports](https://github.com/user-attachments/assets/b2611b13-e95c-45c5-aea6-11bb004b3f77)
 
-these characters were:
-- U+200B (zero width space)
-- U+200C (zero width non-joiner)
-- U+200D (zero width joiner)
-- U+200E (left-to-right mark)
-- U+200F (right-to-left mark)
+only two character types were present: U+200B (545) and U+200C (487). 1032 bits total = 129 bytes of hidden data.
 
-each character type maps to a bit. figuring out which character maps to 0 or 1 was trial and error:
+two characters means two possible bit mappings. tried U+200B=0/U+200C=1 first.
 
-1. extract all zero-width characters from the file
-2. try a mapping (e.g., U+200B=0, U+200C=1, ...)
-3. group resulting bits into 8-bit chunks
-4. decode as ascii
-5. if output is readable text, the mapping is correct. if garbage, try another mapping.
-
-the mapping that worked: **U+200C and U+200E = 1, everything else = 0**. i wrote a decoder:
+U+200B=0, U+200C=1 produced readable ascii. wrote a decoder:
 
 ```python
 import sys
 
-ZW_MAP = {
-    "\u200b": "0",
-    "\u200c": "1",
-    "\u200d": "0",
-    "\u200e": "1",
-    "\u200f": "0",
-}
-
+# mapping: U+200B=0, U+200C=1
 data = sys.stdin.read()
-bits = "".join(ZW_MAP.get(c, "") for c in data)
+bits = "".join("0" if c == "\u200b" else "1" if c == "\u200c" else "" for c in data)
 out = "".join(chr(int(bits[i:i+8], 2)) for i in range(0, len(bits), 8) if len(bits[i:i+8]) == 8)
 print(out)
 ```
