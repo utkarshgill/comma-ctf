@@ -37,6 +37,8 @@ instruction saying to go somewhere 'for the next flag'. Good luck!
 
 the model_reports directory had many subdirectories. what what what... a uuid starting with the flag we just found... well WHAT ARE THE ODDS?!
 
+![model reports](https://github.com/user-attachments/assets/b2611b13-e95c-45c5-aea6-11bb004b3f77)
+
 there was a readme file at `429e680b-077d-461f-9df9-dd28aa0b6b26/400/README.txt`. it contained plain text about model evaluation reports. nothing obviously suspicious:
 
 ```
@@ -73,8 +75,6 @@ for c in set(text):
 # U+200B: 545 occurrences
 # U+200C: 487 occurrences
 ```
-
-![model reports](https://github.com/user-attachments/assets/b2611b13-e95c-45c5-aea6-11bb004b3f77)
 
 only two character types were present: U+200B (545) and U+200C (487). 1032 bits total = 129 bytes of hidden data.
 
